@@ -63,6 +63,14 @@ public class SquadsBAdapter extends RecyclerView.Adapter<SquadsBAdapter.MyViewHo
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
 
+        if (CreateTeamActivity.addedPlayerIds.contains("_" + list.get(position).getPidPlayers() + "_")) {
+            holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+            holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+        } else {
+            holder.cardViewSelected.setBackgroundColor(Color.WHITE);
+            holder.im_AddPlayer.setImageResource(R.drawable.plus_icon);
+        }
+
         if(allSelectedPlayer.size()>0) {
             if (listData.isSelected() == true) {
                 if (HelperData.team1NameShort == listData.getAbbr()) {

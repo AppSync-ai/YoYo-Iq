@@ -2,6 +2,7 @@ package com.example.yoyoiq.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.yoyoiq.Admin;
 import com.example.yoyoiq.CreateTeamActivity;
 import com.example.yoyoiq.InSideContestActivityFragments.AllSelectedPlayerFromServer;
 import com.example.yoyoiq.Model.AllSelectedPlayer;
@@ -32,10 +34,10 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
     private int lastSelectedPosition = -1;
     private List<AllSelectedPlayerFromServer> allSelectedPlayer = new ArrayList<>();
 
-    public BOWLAdapter(Context context, ArrayList<SquadsA> list,List<AllSelectedPlayerFromServer> allSelectedPlayer) {
+    public BOWLAdapter(Context context, ArrayList<SquadsA> list, List<AllSelectedPlayerFromServer> allSelectedPlayer) {
         this.context = context;
         this.list = list;
-        this.allSelectedPlayer=allSelectedPlayer;
+        this.allSelectedPlayer = allSelectedPlayer;
     }
 
     @NonNull
@@ -55,15 +57,22 @@ public class BOWLAdapter extends RecyclerView.Adapter<BOWLAdapter.MyViewHolder> 
         if (listData.getPlaying11() == true) {
             holder.isPlaying.setText("Playing");
         }
-        if(listData.getAbbr()==HelperData.team1NameShort){
+        if (listData.getAbbr() == HelperData.team1NameShort) {
             Glide.with(context).load(HelperData.logoUrlTeamA).into(holder.playerImg);
 
-        }
-        else{
+        } else {
             Glide.with(context).load(HelperData.logoUrlTeamB).into(holder.playerImg);
         }
 
-        if(allSelectedPlayer.size()>0) {
+        if (CreateTeamActivity.addedPlayerIds.contains("_" + list.get(position).getPidPlayers() + "_")) {
+            holder.cardViewSelected.setBackgroundColor(Color.LTGRAY);
+            holder.im_AddPlayer.setImageResource(R.drawable.minus_icon);
+        } else {
+            holder.cardViewSelected.setBackgroundColor(Color.WHITE);
+            holder.im_AddPlayer.setImageResource(R.drawable.plus_icon);
+        }
+
+        if (allSelectedPlayer.size() > 0) {
             if (listData.isSelected() == true) {
                 if (HelperData.team1NameShort == listData.getAbbr()) {
                     CreateTeamActivity.addedPlayerIds = CreateTeamActivity.addedPlayerIds + "_" + listData.getPidPlayers() + "_\n";

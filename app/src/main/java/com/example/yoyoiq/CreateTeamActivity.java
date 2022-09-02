@@ -1,5 +1,7 @@
 package com.example.yoyoiq;
 
+import static android.util.Log.wtf;
+import static com.example.yoyoiq.Admin.getLineNumber;
 import static com.example.yoyoiq.common.HelperData.limit;
 import static com.example.yoyoiq.common.HelperData.newTeamMaking;
 
@@ -59,7 +61,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable;
     public static String addedPlayerIds;
-    public static  String CreatedTeamId;
+    public static String CreatedTeamId;
     private List<AllSelectedPlayerFromServer> listData = new ArrayList<>();
 
     @Override
@@ -70,13 +72,13 @@ public class CreateTeamActivity extends AppCompatActivity {
         setAction();
         countDownStart();
         linearLayout1.setVisibility(View.VISIBLE);
-        if(getIntent().hasExtra("CreatedTeamId")){
+        if (getIntent().hasExtra("CreatedTeamId")) {
             listData = new Gson().fromJson(getIntent().getStringExtra("listdata"), new TypeToken<ArrayList<AllSelectedPlayerFromServer>>() {
             }.getType());
 
         }
 
-        pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b,listData);
+        pageAdapterPlayer = new PageAdapterPlayer(getSupportFragmentManager(), tabLayout.getTabCount(), match_id, matchA, matchB, logo_url_a, logo_url_b, listData);
         viewPager.setAdapter(pageAdapterPlayer);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -130,6 +132,7 @@ public class CreateTeamActivity extends AppCompatActivity {
         playerCounter();
         creditCounter();
         playerSectionCounter();
+
 
         HelperData.wk.observe(this, e -> {
             if (e == null) {
@@ -196,7 +199,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         logo_url_b = getIntent().getStringExtra("logo_url_b");
         date_start = getIntent().getStringExtra("date_start");
         date_end = getIntent().getStringExtra("date_end");
-
 
 
         tabLayout = findViewById(R.id.tabLayout);
